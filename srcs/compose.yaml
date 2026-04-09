@@ -16,6 +16,29 @@ services:
       - source: nginx-config
         target: /etc/nginx/sites-available/inception
 
+  wordpress:
+    restart: always
+    pull_policy: never
+
+    image: inception/website
+    build: ./requirements/wordpress/
+    volumes:
+      - static-content:/var/www/html
+    expose:
+      - "9000"
+
+    configs:
+      - source: nginx-config
+        target: /etc/nginx/sites-available/inception
+
 configs:
   nginx-config:
     file: ./requirements/nginx/inception.conf
+
+volumes:
+  static-content:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '${HOME}/42/inception/data/wordpress'
