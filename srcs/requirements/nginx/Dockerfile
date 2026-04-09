@@ -8,8 +8,13 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 
 STOPSIGNAL SIGQUIT
 
+CMD ["nginx", "-g", "daemon off;"]
+
 FROM nginx-base
 
 EXPOSE 443
 
+COPY ./entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
