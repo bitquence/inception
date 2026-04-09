@@ -3,6 +3,7 @@ name: inception
 services:
   nginx:
     restart: always
+    pull_policy: never
 
     image: inception/proxy
     build: ./requirements/nginx/
