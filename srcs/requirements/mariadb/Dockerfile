@@ -14,7 +14,7 @@ copy ./entrypoint.sh /entrypoint.sh
 STOPSIGNAL SIGTERM
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["mariadbd"]
+CMD ["mysqld"]
 
 FROM mariadb-base
 
