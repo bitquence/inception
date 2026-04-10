@@ -10,8 +10,6 @@ services:
     ports:
       - "8080:80" # MUST BE CHANGED TO 443 LATER ON
 
-    #secrets:
-    #  - ssl_cert
     configs:
       - source: nginx-config
         target: /etc/nginx/sites-available/inception
