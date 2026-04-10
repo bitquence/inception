@@ -70,9 +70,9 @@ volumes:
 
 secrets:
   mariadb-user-pw:
-    file: ./secrets/mariadb_user_password
+    file: ../secrets/mariadb_user_password
   mariadb-root-pw:
-    file: ./secrets/mariadb_root_password
+    file: ../secrets/mariadb_root_password
 
 networks:
   inception:
