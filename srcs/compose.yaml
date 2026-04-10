@@ -7,6 +7,8 @@ services:
 
     image: inception/proxy
     build: ./requirements/nginx/
+    volumes:
+      - static-content:/var/www/html
     ports:
       - "8080:80" # MUST BE CHANGED TO 443 LATER ON
 
