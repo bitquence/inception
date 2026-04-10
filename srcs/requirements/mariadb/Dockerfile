@@ -11,7 +11,7 @@ RUN rm -rf /var/lib/mysql \
 
 copy ./entrypoint.sh /entrypoint.sh
 
-STOPSIGNAL SIGQUIT
+STOPSIGNAL SIGTERM
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["mariadbd"]
