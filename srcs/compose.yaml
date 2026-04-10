@@ -29,6 +29,27 @@ services:
       - source: nginx-config
         target: /etc/nginx/sites-available/inception
 
+  mariadb:
+    restart: always
+    pull_policy: never
+
+    image: inception/db
+    build: ./requirements/mariadb/
+    volumes:
+      - database-store:/var/lib/mysql
+    expose:
+      - "3306"
+
+    environment:
+      MARIADB_ROOT_HOST: localhost
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_USER_PASSWORD_FILE: /run/secrets/mariadb-user-pw
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/mariadb-root-pw
+    secrets:
+      - mariadb-user-pw
+      - mariadb-root-pw
+
 configs:
   nginx-config:
     file: ./requirements/nginx/inception.conf
@@ -40,3 +61,15 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '${HOME}/42/inception/data/wordpress'
+  database-store:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '${HOME}/42/inception/data/mariadb'
+
+secrets:
+  mariadb-user-pw:
+    file: ./secrets/mariadb_user_password
+  mariadb-root-pw:
+    file: ./secrets/mariadb_root_password
