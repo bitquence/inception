@@ -28,6 +28,21 @@ services:
     configs:
       - source: nginx-config
         target: /etc/nginx/sites-available/inception
+    environment:
+      DOMAIN_NAME: jamar.42.fr
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_USER_PASSWORD_FILE: /run/secrets/mariadb-user-pw
+      WP_ADMIN_USER: mamiya
+      WP_ADMIN_EMAIL: jamar@student.42.fr
+      WP_ADMIN_PASSWORD_FILE: /run/secrets/wordpress-admin-pw
+      WP_USER: pentax
+      WP_USER_EMAIL: jamar+1@student.42.fr
+      WP_USER_PASSWORD_FILE: /run/secrets/wordpress-user-pw
+    secrets:
+      - mariadb-user-pw
+      - wordpress-admin-pw
+      - wordpress-user-pw
 
   mariadb:
     restart: always
@@ -73,6 +88,10 @@ secrets:
     file: ../secrets/mariadb_user_password
   mariadb-root-pw:
     file: ../secrets/mariadb_root_password
+  wordpress-admin-pw:
+    file: ../secrets/wordpress_admin_password
+  wordpress-user-pw:
+    file: ../secrets/wordpress_admin_password
 
 networks:
   inception:

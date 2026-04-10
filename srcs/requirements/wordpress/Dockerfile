@@ -14,10 +14,8 @@ RUN apt update \
 		curl \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN curl -o wordpress.tar.gz -fL "https://wordpress.org/wordpress-latest.tar.gz" \
-	&& tar -xzf wordpress.tar.gz -C /usr/src/ \
-	&& rm wordpress.tar.gz \
-	&& chown -R www-data:www-data /usr/src/wordpress
+RUN curl -o /usr/local/bin/wp -f https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+	&& chmod +x /usr/local/bin/wp
 
 CMD ["php-fpm8.2", "-F"]
 
@@ -25,3 +23,10 @@ FROM wordpress-base
 
 RUN sed -i 's/^listen = .*$/listen = 9000/' /etc/php/8.2/fpm/pool.d/www.conf \
 	&& echo '\n[global]\nprocess_control_timeout = 1s' >> /etc/php/8.2/fpm/php-fpm.conf
+
+WORKDIR /var/www/html
+
+COPY ./entrypoint-setup.sh /entrypoint.sh
+
+CMD ["php-fpm8.2", "-F"]
+ENTRYPOINT ["/entrypoint.sh"]
