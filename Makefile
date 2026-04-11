@@ -18,10 +18,10 @@ SECRETS = $(DOMAIN_NAME).crt \
 	wordpress_user_password
 SECRETS := $(addprefix $(SECRETS_DIR)/,$(SECRETS))
 
-up: $(SECRETS)
+up: $(SECRETS) $(VOLUMES)
 	docker compose $(DOCKER_COMPOSE_OPTS) up
 
-build: $(SECRETS)
+build: $(SECRETS) $(VOLUMES)
 	docker compose $(DOCKER_COMPOSE_OPTS) up --build
 
 down:
@@ -29,6 +29,9 @@ down:
 
 clean:
 	docker image rm "nginx:inception" "wordpress:inception" "mariadb:inception"
+
+$(VOLUMES_DIR)/%:
+	mkdir -p $@
 
 $(SECRETS_DIR):
 	mkdir -p $@
