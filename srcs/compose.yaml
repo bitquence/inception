@@ -5,7 +5,7 @@ services:
     restart: always
     pull_policy: never
 
-    image: inception/proxy
+    image: nginx:inception
     build: ./requirements/nginx/
     volumes:
       - static-content:/var/www/html
@@ -23,7 +23,7 @@ services:
     restart: always
     pull_policy: never
 
-    image: inception/website
+    image: wordpress:inception
     build: ./requirements/wordpress/
     volumes:
       - static-content:/var/www/html
@@ -53,7 +53,7 @@ services:
     restart: always
     pull_policy: never
 
-    image: inception/db
+    image: mariadb:inception
     build: ./requirements/mariadb/
     volumes:
       - database-store:/var/lib/mysql
@@ -100,7 +100,7 @@ secrets:
   wordpress-admin-pw:
     file: ../secrets/wordpress_admin_password
   wordpress-user-pw:
-    file: ../secrets/wordpress_admin_password
+    file: ../secrets/wordpress_user_password
 
 networks:
   inception:
