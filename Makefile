@@ -1,10 +1,34 @@
 NAME = inception
 
-SECRETS_DIR=./secrets
-DOMAIN_NAME=jamar.42.fr
+DOCKER_COMPOSE_FILE = ./srcs/compose.yaml
+DOCKER_COMPOSE_OPTS = -f $(DOCKER_COMPOSE_FILE)
 
-up:
-	docker compose up --build
+SECRETS_DIR = ./secrets
+VOLUMES_DIR = ${HOME}/42/inception/data
+DOMAIN_NAME = jamar.42.fr
+
+VOLUMES = wordpress mariadb
+SECRETS := $(addprefix $(VOLUMES_DIR)/,$(VOLUMES))
+
+SECRETS = $(DOMAIN_NAME).crt \
+	$(DOMAIN_NAME).key \
+	mariadb_user_password \
+	mariadb_root_password \
+	wordpress_admin_password \
+	wordpress_user_password
+SECRETS := $(addprefix $(SECRETS_DIR)/,$(SECRETS))
+
+up: $(SECRETS)
+	docker compose $(DOCKER_COMPOSE_OPTS) up
+
+build: $(SECRETS)
+	docker compose $(DOCKER_COMPOSE_OPTS) up --build
+
+down:
+	docker compose $(DOCKER_COMPOSE_OPTS) down
+
+clean:
+	docker image rm "nginx:inception" "wordpress:inception" "mariadb:inception"
 
 $(SECRETS_DIR)/:
 	mkdir $(dir $@)
