@@ -30,7 +30,11 @@ init_db() {
 
 	mysql_install_db --basedir=/usr --datadir=$DATADIR --user=mysql > /dev/null
 
-	mariadbd --user=mysql --bootstrap <<-EOSQL
+	mysqld -umysql --bootstrap --datadir=$DATADIR <<-EOSQL
+		FLUSH PRIVILEGES;
+		ALTER USER 'root'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';
+		CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';
+
 		CREATE DATABASE \`${MARIADB_DATABASE}\`;
 		CREATE USER '${MARIADB_USER}'@'%' IDENTIFIED BY '${MARIADB_USER_PASSWORD}';
 		GRANT ALL PRIVILEGES ON \`${MARIADB_DATABASE}\`.* TO '${MARIADB_USER}'@'%';
