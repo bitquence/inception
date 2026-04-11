@@ -27,7 +27,11 @@ build: $(SECRETS) $(VOLUMES)
 down:
 	docker compose $(DOCKER_COMPOSE_OPTS) down
 
-clean:
+clean: down
+	rm -rf $(SECRETS_DIR)
+	rm -rf $(VOLUMES)
+
+fclean: clean
 	docker image rm "nginx:inception" "wordpress:inception" "mariadb:inception"
 
 $(VOLUMES_DIR)/%:
