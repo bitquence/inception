@@ -30,8 +30,8 @@ down:
 clean:
 	docker image rm "nginx:inception" "wordpress:inception" "mariadb:inception"
 
-$(SECRETS_DIR)/:
-	mkdir $(dir $@)
+$(SECRETS_DIR):
+	mkdir -p $@
 
 $(SECRETS_DIR)/$(DOMAIN_NAME).key: $(SECRETS_DIR)/$(DOMAIN_NAME).crt
 $(SECRETS_DIR)/$(DOMAIN_NAME).crt: $(SECRETS_DIR)
