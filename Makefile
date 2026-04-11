@@ -28,7 +28,6 @@ down:
 	docker compose $(DOCKER_COMPOSE_OPTS) down
 
 clean: down
-	rm -rf $(SECRETS_DIR)
 	rm -rf $(VOLUMES)
 
 fclean: clean
