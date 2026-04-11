@@ -71,11 +71,7 @@ services:
     expose:
       - "3306"
     healthcheck:
-      test:
-        - CMD
-        - mysqladmin
-        - ping
-        - --silent
+      test: ["CMD", "mysqladmin", "--silent", "-u$$MARIADB_USER", "ping"]
       interval: 10s
       timeout: 5s
       retries: 3
