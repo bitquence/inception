@@ -11,6 +11,7 @@ RUN apt update \
 		php8.2-gd \
 		php8.2-intl \
 		php8.2-fpm \
+		libfcgi-bin \
 		curl \
 	&& rm -rf /var/lib/apt/lists/*
 
