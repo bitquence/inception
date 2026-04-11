@@ -80,13 +80,13 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '${HOME}/42/inception/data/wordpress'
+      device: '${HOME}/data/wordpress'
   database-store:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '${HOME}/42/inception/data/mariadb'
+      device: '${HOME}/data/mariadb'
 
 secrets:
   nginx-ssl-cert:
