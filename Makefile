@@ -4,7 +4,7 @@ DOCKER_COMPOSE_FILE = ./srcs/compose.yaml
 DOCKER_COMPOSE_OPTS = -f $(DOCKER_COMPOSE_FILE)
 
 SECRETS_DIR = ./secrets
-VOLUMES_DIR = ${HOME}/42/inception/data
+VOLUMES_DIR = ${HOME}/data
 DOMAIN_NAME = jamar.42.fr
 
 VOLUMES = wordpress mariadb
