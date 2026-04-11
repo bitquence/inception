@@ -15,8 +15,6 @@ fetch_env_value_in_file() {
 	local file_var_name="${var_name}_FILE"
 	local file_path="${!file_var_name}"
 
-	echo $var_name $file_var_name $file_path
-
 	if [ -f "$file_path" ]; then
 		printf -v "$var_name" "%s" "$(cat "$file_path")"
 	else
