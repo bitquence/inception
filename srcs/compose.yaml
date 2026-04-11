@@ -10,11 +10,14 @@ services:
     volumes:
       - static-content:/var/www/html
     ports:
-      - "8080:80" # MUST BE CHANGED TO 443 LATER ON
+      - "443:443"
 
     configs:
       - source: nginx-config
         target: /etc/nginx/sites-available/inception
+    secrets:
+      - nginx-ssl-cert
+      - nginx-ssl-cert-key
 
   wordpress:
     restart: always
@@ -86,6 +89,10 @@ volumes:
       device: '${HOME}/42/inception/data/mariadb'
 
 secrets:
+  nginx-ssl-cert:
+    file: ../secrets/jamar.42.fr.crt
+  nginx-ssl-cert-key:
+    file: ../secrets/jamar.42.fr.key
   mariadb-user-pw:
     file: ../secrets/mariadb_user_password
   mariadb-root-pw:
