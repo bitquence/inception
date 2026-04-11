@@ -20,7 +20,8 @@ FROM mariadb-base
 
 RUN { \
 		echo "[mysqld]"; \
-		echo "bind-address = 0.0.0.0"; \
 		echo "user = mysql"; \
 		echo "port = 3306"; \
+		echo "datadir = /var/lib/mysql"; \
+		echo "bind-address = 0.0.0.0"; \
 	} > /etc/mysql/mariadb.conf.d/inception.cnf
