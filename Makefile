@@ -8,7 +8,7 @@ VOLUMES_DIR = ${HOME}/data
 DOMAIN_NAME = jamar.42.fr
 
 VOLUMES = wordpress mariadb
-SECRETS := $(addprefix $(VOLUMES_DIR)/,$(VOLUMES))
+VOLUMES := $(addprefix $(VOLUMES_DIR)/,$(VOLUMES))
 
 SECRETS = $(DOMAIN_NAME).crt \
 	$(DOMAIN_NAME).key \
