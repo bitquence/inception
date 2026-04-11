@@ -30,16 +30,13 @@ init_db() {
 
 	mysql_install_db --basedir=/usr --datadir=$DATADIR --user=mysql > /dev/null
 
-	service mariadb start
-
-	mysql -e "CREATE DATABASE \`${MARIADB_DATABASE}\`;"
-	mysql -e "CREATE USER '${MARIADB_USER}'@'%' IDENTIFIED BY '${MARIADB_USER_PASSWORD}';"
-	mysql -e "GRANT ALL PRIVILEGES ON \`${MARIADB_DATABASE}\`.* TO '${MARIADB_USER}'@'%';"
-	mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';"
-	mysql -e "FLUSH PRIVILEGES;"
-	mysql -u root --skip-password -e "ALTER USER 'root'@'${MARIADB_ROOT_HOST}' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';"
-
-	service mariadb stop
+	mariadbd --user=mysql --bootstrap <<-EOSQL
+		CREATE DATABASE \`${MARIADB_DATABASE}\`;
+		CREATE USER '${MARIADB_USER}'@'%' IDENTIFIED BY '${MARIADB_USER_PASSWORD}';
+		GRANT ALL PRIVILEGES ON \`${MARIADB_DATABASE}\`.* TO '${MARIADB_USER}'@'%';
+		GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';
+		FLUSH PRIVILEGES;
+	EOSQL
 }
 
 if [ ! -d "$DATADIR/mysql" ]; then
