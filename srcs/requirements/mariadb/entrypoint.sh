@@ -30,14 +30,16 @@ init_db() {
 
 	mysql_install_db --basedir=/usr --datadir=$DATADIR --user=mysql > /dev/null
 
-	mysqld -u root <<- EOSQL
-		CREATE USER 'root'@'${MARIADB_ROOT_HOST}' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}' ;
-		GRANT ALL ON *.* TO 'root'@'${MARIADB_ROOT_HOST}' WITH GRANT OPTION ;
-		GRANT PROXY ON ''@'%' TO 'root'@'${MARIADB_ROOT_HOST}' WITH GRANT OPTION;
-		CREATE USER '${MARIADB_USER}'@'%' IDENTIFIED BY PASSWORD '${MARIADB_PASSWORD}';
-		CREATE DATABASE IF NOT EXISTS \`${MARIADB_DATABASE}\`;
-		GRANT ALL ON \`${MARIADB_DATABASE}\`.* TO '${MARIADB_USER}'@'%';
-	EOSQL
+	service mariadb start
+
+	mysql -e "CREATE DATABASE \`${MARIADB_DATABASE}\`;"
+	mysql -e "CREATE USER '${MARIADB_USER}'@'%' IDENTIFIED BY '${MARIADB_USER_PASSWORD}';"
+	mysql -e "GRANT ALL PRIVILEGES ON \`${MARIADB_DATABASE}\`.* TO '${MARIADB_USER}'@'%';"
+	mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';"
+	mysql -e "FLUSH PRIVILEGES;"
+	mysql -u root --skip-password -e "ALTER USER 'root'@'${MARIADB_ROOT_HOST}' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';"
+
+	service mariadb stop
 }
 
 if [ ! -d "$DATADIR/mysql" ]; then
