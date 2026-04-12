@@ -9,6 +9,8 @@ services:
     build: ./requirements/nginx/
     volumes:
       - static-content:/var/www/html
+    networks:
+      - inception
     ports:
       - "443:443"
     depends_on:
@@ -30,6 +32,8 @@ services:
     build: ./requirements/wordpress/
     volumes:
       - static-content:/var/www/html
+    networks:
+      - inception
     expose:
       - "9000"
     depends_on:
@@ -68,6 +72,8 @@ services:
     build: ./requirements/mariadb/
     volumes:
       - database-store:/var/lib/mysql
+    networks:
+      - inception
     expose:
       - "3306"
     healthcheck:
