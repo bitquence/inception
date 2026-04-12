@@ -31,7 +31,7 @@ clean: down
 	rm -rf $(VOLUMES)
 
 fclean: clean
-	docker image rm "nginx:inception" "wordpress:inception" "mariadb:inception"
+	docker image rm "nginx:inception" "wordpress:inception" "mariadb:inception" || true
 
 $(VOLUMES_DIR)/%:
 	mkdir -p $@
