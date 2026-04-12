@@ -48,17 +48,8 @@ services:
     configs:
       - source: nginx-config
         target: /etc/nginx/sites-available/inception
-    environment:
-      DOMAIN_NAME: jamar.42.fr
-      MARIADB_DATABASE: wordpress
-      MARIADB_USER: wordpress
-      MARIADB_USER_PASSWORD_FILE: /run/secrets/mariadb-user-pw
-      WP_ADMIN_USER: mamiya
-      WP_ADMIN_EMAIL: jamar@student.42.fr
-      WP_ADMIN_PASSWORD_FILE: /run/secrets/wordpress-admin-pw
-      WP_USER: pentax
-      WP_USER_EMAIL: jamar+1@student.42.fr
-      WP_USER_PASSWORD_FILE: /run/secrets/wordpress-user-pw
+    env_file:
+      - ./requirements/wordpress/.env
     secrets:
       - mariadb-user-pw
       - wordpress-admin-pw
@@ -82,12 +73,8 @@ services:
       timeout: 5s
       retries: 3
 
-    environment:
-      MARIADB_ROOT_HOST: localhost
-      MARIADB_DATABASE: wordpress
-      MARIADB_USER: wordpress
-      MARIADB_USER_PASSWORD_FILE: /run/secrets/mariadb-user-pw
-      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/mariadb-root-pw
+    env_file:
+      - ./requirements/mariadb/.env
     secrets:
       - mariadb-user-pw
       - mariadb-root-pw
