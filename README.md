@@ -1,6 +1,6 @@
 # Inception
 
-This project has been created as part of the 42 curriculum by jamar.
+*This project has been created as part of the 42 curriculum by jamar.*
 
 ## Description
 
