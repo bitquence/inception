@@ -24,6 +24,12 @@ up: $(SECRETS) $(VOLUMES)
 build: $(SECRETS) $(VOLUMES)
 	docker compose $(DOCKER_COMPOSE_OPTS) up --build
 
+start:
+	docker compose $(DOCKER_COMPOSE_OPTS) start
+
+stop:
+	docker compose $(DOCKER_COMPOSE_OPTS) stop
+
 down:
 	docker compose $(DOCKER_COMPOSE_OPTS) down
 
