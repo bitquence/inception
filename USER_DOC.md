@@ -19,10 +19,10 @@ mariadb is the data store used by wordpress for persistent data storage. It cont
 ## Instructions
 
 To run Inception, you must first define the following secrets in the `./secrets/` directory:
-	- `mariadb_user_password`
-	- `mariadb_root_password`
-	- `wordpress_admin_password`
-	- `wordpress_user_password`
+- `mariadb_user_password`
+- `mariadb_root_password`
+- `wordpress_admin_password`
+- `wordpress_user_password`
 	
 Then, you can run `make` in order to build the project and put the website online. To take the website offline, run `make down`, and to clean the project's data store, run `make clean`.
 

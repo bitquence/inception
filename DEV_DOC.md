@@ -3,10 +3,10 @@
 ## Set up
 
 Before running `make`, an adequate version of Docker must be installed on the machine, and the following files must exist in the `./secrets/`, and not be empty:
-	- `mariadb_user_password`
-	- `mariadb_root_password`
-	- `wordpress_admin_password`
-	- `wordpress_user_password`
+- `mariadb_user_password`
+- `mariadb_root_password`
+- `wordpress_admin_password`
+- `wordpress_user_password`
 
 If needed, the containers can be rebuilt using the `make build` command. This is useful for when secrets have to be rotated. `make clean` clears the volumes' contents.
 
