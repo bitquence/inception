@@ -8,17 +8,17 @@ Inception is meant to familiarize and expose the student to **containerization**
 
 The student is meant to manually write the images used to set up the services, and the containers, despite ready-made images existing on Docker's Docker Hub platform. The student will also set up networking and persistent file stores for the containers. This will familiarize the student with the syntax of **Dockerfiles** and the intricacies related to setting up docker images.
 
-## Project Description
+## Project description
 
 **Docker** is a piece of software that facilitates the containerization of processes, akin to a virtual machine for instance, but done using **operating-system-level constructs**, allowing them to remain lean and efficient while giving the guest program the illusion that it is running on its own distinct set of system resources. Furthermore, Docker containers are meant to be reproducible and consistent across all platforms.
 
-This project specifically leverages the `docker compose` tool, which allows to compose multiple containers, and set up data flow between them. It offers secret management, networking between all services, and dependency management to ensure the containers start in the correct order.
+This project specifically leverages the `docker compose` tool, which allows the developer to compose multiple containers, and set up data flow between them. It offers secret management, networking facilities between all services, and mechanisms to ensure the containers start in the correct order.
 
 ### Design choices
 
-**Initialization shell scripts** (entrypoint.sh and such) are used liberally in this project to ensure the image's initialization steps prior to running the script (which often involve downloading resources, or setting up directories/permissions) are cached, and due to the nature of how Docker images work, won't be evaluated again.
+**Initialization shell scripts** (entrypoint.sh and such) are used liberally in this project to ensure the image's installation steps prior to running the initialization script (which often involve downloading resources, or setting up directories/permissions) are cached. Once cached, due to the nature of how Docker images work, these steps don't have to be evaluated again when rebuilding.
 
-**Secrets** are managed through `docker compose`, which is configured in the `./srcs/compose.yaml` file. Said files are injected into the `/run/secrets/` directory in the target container. 
+**Secrets** are also managed through `docker compose`, which is configured in the `./srcs/compose.yaml` file. Said files are injected into the `/run/secrets/` directory in the target container. 
 
 **Make** will not build the project if the files containing the various secrets don't exist at the `./secrets/` directory. The only secret that the Makefile will generate is the SSL certificate pair required for **nginx to function under https**.
 
@@ -51,7 +51,7 @@ The process of using a "bind mount" on a file or directory means to make that fi
 	- `mariadb_root_password`
 	- `wordpress_admin_password`
 	- `wordpress_user_password`
-2. Optionally add a certificate for nginx to use while processing https requests. If one is not provided, `make` will generate one automatically using `openssl`.
+2. Optionally, add a certificate for nginx to use while processing https requests. If one is not provided, `make` will generate one automatically using `openssl`.
 2. Run the `make [up]` command.
 
 ### Rebuild all containers and make them go online
